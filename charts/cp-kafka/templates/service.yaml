@@ -11,6 +11,14 @@ spec:
   ports:
     - port: 9092
       name: broker
+    {{- if .Values.ingress.enabled  }}
+      {{- $brokers := .Values.brokers | int }}
+      {{- $root := . }}
+      {{- range $i, $e := until $brokers }}
+    - port: {{ add $root.Values.ingress.firstListenerPort $i}}
+      name: ingressport-{{ $i }}
+      {{- end }}
+    {{- end }}
   selector:
     app: {{ template "cp-kafka.name" . }}
     release: {{ .Release.Name }}

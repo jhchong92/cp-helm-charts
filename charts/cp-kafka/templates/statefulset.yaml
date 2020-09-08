@@ -95,6 +95,14 @@ spec:
         - containerPort: {{ add $root.Values.nodeport.firstListenerPort $i }}
           name: nodeport-{{ $i }}
           {{- end }}
+        {{- if .Values.ingress.enabled  }}
+          {{- $brokers := .Values.brokers | int }}
+          {{- $root := . }}
+          {{- range $i, $e := until $brokers }}
+        - containerPort: {{ add $root.Values.ingress.firstListenerPort $i}}
+          name: ingressport-{{ $i }}
+          {{- end }}
+        {{- end }}
         {{- end }}
         resources:
 {{ toYaml .Values.resources | indent 10 }}

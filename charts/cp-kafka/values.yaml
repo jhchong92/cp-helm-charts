@@ -128,6 +128,9 @@ nodeport:
   servicePort: 19092
   firstListenerPort: 31090
 
+ingress:
+  enabled: false
+  firstListenerPort: 5432
 ## ------------------------------------------------------
 ## Zookeeper
 ## ------------------------------------------------------
